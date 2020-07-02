@@ -6,7 +6,7 @@ import _ from 'lodash';
 
 // way 1
 const createRow = () => _.times(9, _.constant(null));
-const createTable = () => _.times(9, createRow);
+export const createTable = () => _.times(9, createRow);
 
 const t = createTable();
 

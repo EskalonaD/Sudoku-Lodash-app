@@ -1,0 +1,22 @@
+.sudoku-cell {
+    border: 1px solid #000;
+    width: 1rem;
+    height: 1rem;
+    line-height: 2;
+    padding: 0.5rem 1rem;
+    margin: 0;
+    text-align: center;
+}
+
+.sudoku-cell.sudoku-border-right {
+    border-right: 2px solid #000;
+}
+
+.sudoku-cell.sudoku-border-bottom {
+    border-bottom: 2px solid #000;
+}
+
+.sudoku-table {
+    border-spacing: 0px;
+    border: 3px solid #000;
+}
