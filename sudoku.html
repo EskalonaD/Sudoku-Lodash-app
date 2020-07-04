@@ -23,7 +23,7 @@
                         ? 'sudoku-border-bottom'
                         : '';
             %>
-                <td class="sudoku-cell <%= rightBorderClass %> <%= bottomBorderClass %>"
+                <td class="sudoku-cell js-sudoku-cell <%= rightBorderClass %> <%= bottomBorderClass %>"
                     data-row="<%= rowIndex %>"
                     data-column="<%= cellIndex %>">
                     <%= typeof cell === 'number' ? cell : '-' %>

@@ -114,7 +114,7 @@ const getAllConstraints = table => {
 }
 
     //testing
-console.log(getAllConstraints(createTable2()));
+// console.log(getAllConstraints(createTable2()));
     //end of testing
 
 /**
@@ -128,3 +128,10 @@ const allDistinct = values => {
 
 const allDistinctList = constraintList =>
     _.reduce(constratintList, (acc, values) => acc && allDistinct(values), true);
+
+
+export const setCell = (table, rowIndex, columnIndex, value)  => {
+    const newTable = _.cloneDeep(table);
+    newTable[rowIndex][columnIndex] = value;
+    return newTable;
+}
