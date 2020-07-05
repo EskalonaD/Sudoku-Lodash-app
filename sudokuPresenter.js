@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import { setCell, validateTable, validateWin } from './sudokuModel';
+import { setCell, validateTable, validateWin, createTable } from './sudokuModel';
 
 const templateString = document.getElementsByClassName('js-table-template')[0].innerHTML;
 
@@ -87,7 +87,8 @@ export const renderTimer = (t = 0, table = tableModel) => {
 export const renderWinView = () => {
     const winView = document.getElementsByClassName('js-win-view-template')[0].innerHTML;
     const time = document.getElementsByClassName('js-spent-time')[0].textContent;
-    document.getElementsByClassName('js-win-view')[0].innerHTML = _.template(winView)({t: time});
+    document.getElementsByClassName('js-win-view-wrapper')[0].innerHTML = _.template(winView)({t: time});
+    document.getElementsByClassName('js-again-button')[0].addEventListener('click', () => restartGame());
 }
 
 const winEvent = new Event('win');
@@ -99,6 +100,18 @@ const addTimerToWin = (renderTimer, time = 0, table = tableModel) => {
 }
 
 export const startGame = () => {
+    const table = createTable();
+    renderTable(table);
     addTimerToWin(renderTimer);
+
+    // setTimeout(() => document.getElementsByClassName('js-table')[0].dispatchEvent(winEvent), 5000)
     document.getElementsByClassName('js-table')[0].addEventListener('win', () => {console.log('catch event'); renderWinView()});
+}
+
+const restartGame = () => {
+    document.getElementsByClassName('js-win-view-wrapper')[0].innerHTML = '';
+    document.getElementsByClassName('js-table')[0].innerHTML = '';
+    document.getElementsByClassName('js-win-view-wrapper').innerHTML = '';
+
+    startGame();
 }
