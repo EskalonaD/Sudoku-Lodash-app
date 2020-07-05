@@ -7,10 +7,10 @@
     <title>Sudoku</title>
 </head>
 <body>
-    <div class="js-app">
+    <div class="js-app app-wrapper">
         <table class="js-table sudoku-table"></table>
         <div class="js-timer timer"></div>
-        <div class="win-view js-win-view"></div>
+        <div class="win-view-wrapper js-win-view-wrapper"></div>
     </div>
     <script type="text/template" class="js-table-template">
         <% _.each( table, (row, rowIndex) => { %>
@@ -42,9 +42,11 @@
         <% }); %>
     </script>
     <script type="text/template" class="js-win-view-template">
-        <h2>Congratulation</h2>
-        <p>You win in <%= t %> seconds</p>
-        <button class="js-again-button">Start again</button>
+        <div class="win-view">
+            <h2>Congratulation</h2>
+            <p>You win in <%= t %> seconds</p>
+            <button class="js-again-button">Start again</button>
+        </div>
     </script>
     <script src="sudoku.dist.js"></script>
 </body>
