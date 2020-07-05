@@ -1,4 +1,6 @@
-// position in tables 1-st number - row, second - column, third - value
+/**
+ *  positions in tables: first number codify row, second - column, third - value of cell
+ * */
 export const startingPositions = [
     [
         [0, 0, 9], [0, 1, 2], [0, 2, 7], [0, 7, 6], [0, 8, 3],

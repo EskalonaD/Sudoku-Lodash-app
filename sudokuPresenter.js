@@ -35,20 +35,13 @@ const deselectCell = cellNode => {
 }
 
 const addClickEvent = cell => {
-    const onBlur = () => {
-        deselectCell(cell);
-    }
+    const onBlur = () => deselectCell(cell);
 
     const escapeHandling = (event) => {
         if(event.key === 'Escape') event.target.blur();
-    }
+    };
 
-    cell.addEventListener('focus', event => {
-        // console.log('target', event.target);
-        // console.log('dataset', event.target.dataset);
-        selectCell(cell);
-    });
-
+    cell.addEventListener('focus', () => selectCell(cell));
     cell.addEventListener('keydown', escapeHandling);
     cell.addEventListener('blur', onBlur);
 };
@@ -63,6 +56,7 @@ const insertValue = (key) => {
     if (selectedNode) {
         const dataset = selectedNode.dataset;
         const value = parseInt(key) || null;
+
         renderTable(setCell(tableModel, dataset.row, dataset.column, value));
     }
 };
@@ -75,8 +69,7 @@ const addKeyEvent = () => window.addEventListener('keypress', event => {
 const objectMapperPredefinedValues = (data) => _.reduce(data, (acc, cellArr) => {
     acc[`${cellArr[0]}${cellArr[1]}`] = cellArr[2];
     return acc;
-}, {})
-
+}, {});
 
 const nodeExist = className => _.some(document.getElementsByClassName(className));
 
@@ -106,16 +99,8 @@ const addTimerToWin = (renderTimer, time = 0, table = tableModel) => {
 
 const setInitialValues = (table, data) => {
     const cellNodes = document.getElementsByClassName('js-sudoku-cell');
-    // console.log('herer', cellNodes)
-    // parsePredefineValues(table, data);
 
-    // _.each(cellNodes, () => console.log('hi'))
-    _.each(cellNodes, cell => {
-        // console.log(typeof cell.value);
-        // console.log(!isNaN(+cell.value));
-        // console.log(cell.value)
-        if (!isNaN(+cell.textContent)) cell.classList.add('js-predefine-cell')
-    });
+    _.each(cellNodes, cell => !isNaN(+cell.textContent) && cell.classList.add('js-predefine-cell'));
 };
 
 const restartGame = (newData) => {
@@ -131,15 +116,15 @@ export const startGame = (data) => {
     const random = Math.trunc(Math.random() * data.length);
     const startedValues = data[random];
     const newData = _.filter(data, (value, propName) => propName !== random);
-
     const restartFunction = data => () => restartGame(data);
+
     renderTable = _.partial((data, table) => {
         const isValid = validateTable(table);
         const domTable = document.getElementsByClassName('js-table')[0];
-
-        domTable.innerHTML = tableTemplate({ table, isValid });
         const cellNodes = document.getElementsByClassName('js-sudoku-cell');
         const predefinedValuesObject = objectMapperPredefinedValues(data);
+
+        domTable.innerHTML = tableTemplate({ table, isValid });
         _.each(cellNodes, cell => {
             if(typeof predefinedValuesObject[`${cell.dataset.row}${cell.dataset.column}`] === 'number') {
                 cell.classList.add('js-predefine-cell');
