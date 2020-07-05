@@ -10,6 +10,7 @@
     <div class="js-app">
         <table class="js-table sudoku-table"></table>
         <div class="js-timer timer"></div>
+        <div class="win-view js-win-view"></div>
     </div>
     <script type="text/template" class="js-table-template">
         <% _.each( table, (row, rowIndex) => { %>
@@ -23,7 +24,7 @@
                     (rowIndex === 2 || rowIndex === 5)
                         ? 'sudoku-border-bottom'
                         : '';
-                const validClass = isValid ? '' : 'invalid';
+                const validClass = isValid ? '' : 'invalid js-invalid';
                 const classList = [
                     rightBorderClass,
                     bottomBorderClass,
@@ -32,12 +33,18 @@
             %>
                 <td class="sudoku-cell js-sudoku-cell <%= classList %>"
                     data-row="<%= rowIndex %>"
-                    data-column="<%= cellIndex %>">
+                    data-column="<%= cellIndex %>"
+                    tabIndex="<%= rowIndex*10 + cellIndex + 1 %>">
                     <%= typeof cell === 'number' ? cell : '-' %>
                 </td>
             <% }); %>
             </tr>
         <% }); %>
+    </script>
+    <script type="text/template" class="js-win-view-template">
+        <h2>Congratulation</h2>
+        <p>You win in <%= t %> seconds</p>
+        <button class="js-again-button">Start again</button>
     </script>
     <script src="sudoku.dist.js"></script>
 </body>
