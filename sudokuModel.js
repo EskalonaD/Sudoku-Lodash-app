@@ -122,13 +122,16 @@ const getAllConstraints = table => {
  * check if lines has uniq number values
  */
 const allDistinct = values => {
-    const filteredValues = ( values, x => typeof x === 'number');
+    const filteredValues = _.filter( values, x => typeof x === 'number');
+    // console.log(_.uniq(filteredValues))
     return _.uniq(filteredValues).length === filteredValues.length;
 }
 
 const allDistinctList = constraintList =>
-    _.reduce(constratintList, (acc, values) => acc && allDistinct(values), true);
+    _.reduce(constraintList, (acc, values) => acc && allDistinct(values), true);
 
+
+export const validateTable = table => allDistinctList(getAllConstraints(table));
 
 export const setCell = (table, rowIndex, columnIndex, value)  => {
     const newTable = _.cloneDeep(table);

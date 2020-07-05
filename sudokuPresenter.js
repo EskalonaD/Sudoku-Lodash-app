@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import { setCell } from './sudokuModel';
+import { setCell, validateTable } from './sudokuModel';
 
 const templateString = document.getElementsByClassName('js-table-template')[0].innerHTML;
 
@@ -47,8 +47,10 @@ const addKeyEvent = () =>
     });
 
 export const renderTable = (table) => {
+    const isValid = validateTable(table);
+    console.log(isValid);
     const domTable = document.getElementsByClassName('js-table')[0];
-    domTable.innerHTML = tableTemplate({table});
+    domTable.innerHTML = tableTemplate({table, isValid});
 
     tableModel = table;
 
@@ -57,3 +59,10 @@ export const renderTable = (table) => {
 };
 
 addKeyEvent();
+
+export const renderTimer = (t = 0) => {
+    document.getElementsByClassName('js-timer')[0].innerHTML = _.template(
+        '<%= t %> seconds'
+        )({t});
+    _.delay(() => renderTimer(t + 1), 1000);
+}

@@ -1,5 +1,5 @@
 import { createTable } from './sudokuModel';
-import { renderTable } from './sudokuPresenter';
+import { renderTable, renderTimer } from './sudokuPresenter';
 
 let t = createTable();
 
@@ -12,3 +12,4 @@ t[2][1] = 6;
 t[1][2] = 7;
 
 renderTable(t);
+renderTimer();
