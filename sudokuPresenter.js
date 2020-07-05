@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import { setCell, validateTable } from './sudokuModel';
+import { setCell, validateTable, validateWin } from './sudokuModel';
 
 const templateString = document.getElementsByClassName('js-table-template')[0].innerHTML;
 
@@ -33,7 +33,7 @@ const addAllClickEvents = () => _.each(
 
 const insertValue = (key) => {
     const selectedNode = document.getElementsByClassName('js-selected')[0];
-    if(selectedNode) {
+    if (selectedNode) {
         const dataset = selectedNode.dataset;
         const value = parseInt(key) || null;
         renderTable(setCell(tableModel, dataset.row, dataset.column, value));
@@ -43,14 +43,14 @@ const addKeyEvent = () =>
     window.addEventListener('keypress', event => {
         console.log('event', event);
         const key = event.key;
-        if('123456789 '.includes(key)) insertValue(key);
+        if ('123456789 '.includes(key)) insertValue(key);
     });
 
 export const renderTable = (table) => {
     const isValid = validateTable(table);
     console.log(isValid);
     const domTable = document.getElementsByClassName('js-table')[0];
-    domTable.innerHTML = tableTemplate({table, isValid});
+    domTable.innerHTML = tableTemplate({ table, isValid });
 
     tableModel = table;
 
@@ -60,9 +60,12 @@ export const renderTable = (table) => {
 
 addKeyEvent();
 
-export const renderTimer = (t = 0) => {
+const nodeExist = className => _.some(document.getElementsByClassName(className));
+
+export const renderTimer = (t = 0, table = tableModel) => {
     document.getElementsByClassName('js-timer')[0].innerHTML = _.template(
         '<%= t %> seconds'
-        )({t});
-    _.delay(() => renderTimer(t + 1), 1000);
+    )({ t });
+    // _.delay(() => renderTimer(t + 1), 1000);
+    if (!validateWin(table, nodeExist('invalid'))) _.delay(() => renderTimer(t + 1), 1000);
 }

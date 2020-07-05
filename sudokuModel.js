@@ -1,4 +1,6 @@
 import _ from 'lodash';
+import { flow, map, take, flatMap, filter } from 'lodash/fp/map';
+// export const flowFP = flow;
 
 /**
  * table creation
@@ -138,3 +140,8 @@ export const setCell = (table, rowIndex, columnIndex, value)  => {
     newTable[rowIndex][columnIndex] = value;
     return newTable;
 }
+
+
+export const validateWin = (table, isInvalid) =>
+    !_.some(_.flatMap(table), value => typeof value !== 'number')
+    && !isInvalid;
